@@ -14,30 +14,30 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @GetMapping("/")
+    @GetMapping("jobs")
     public List<Job> jobs() {
         return jobService.jobs();
     }
 
-    @PostMapping("/")
+    @PostMapping("jobs")
     public String createJob(@RequestBody Job job) {
         jobService.addJob(job);
         return "Job created successfully!";
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("jobs/{id}")
     public String updateJob(@PathVariable int id, @RequestBody Job job) {
         jobService.updateJob(id, job);
         return "Job updated successfully!";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("jobs/{id}")
     public String deleteJob(@PathVariable int id) {
         jobService.deleteJob(id);
         return "Job deleted successfully!";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("jobs/{id}")
     public Job getJob(@PathVariable int id) {
         return jobService.getJob(id);
     }
