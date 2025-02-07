@@ -7,4 +7,5 @@ public interface JobService {
     List<Job> jobs();
     boolean updateJob(int id, Job job);
     boolean deleteJob(int id);
+    Job getJob(int id);
 }

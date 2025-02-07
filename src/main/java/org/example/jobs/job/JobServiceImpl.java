@@ -41,4 +41,9 @@ public class JobServiceImpl implements JobService {
         jobRepository.deleteById(id);
         return true;
     }
+
+    @Override
+    public Job getJob(int id) {
+        return jobRepository.findById(id).orElse(null);
+    }
 }
