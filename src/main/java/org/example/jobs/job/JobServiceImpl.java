@@ -38,8 +38,11 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public boolean deleteJob(int id) {
-        jobRepository.deleteById(id);
-        return true;
+        if (jobRepository.existsById(id)) {
+            jobRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
