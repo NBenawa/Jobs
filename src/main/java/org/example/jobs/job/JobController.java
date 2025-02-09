@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("jobs")
 public class JobController {
 
     private JobService jobService;
@@ -13,30 +14,30 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @GetMapping("jobs")
+    @GetMapping
     public List<Job> jobs() {
         return jobService.jobs();
     }
 
-    @PostMapping("jobs")
+    @PostMapping
     public String createJob(@RequestBody Job job) {
         jobService.addJob(job);
         return "Job created successfully!";
     }
 
-    @PutMapping("jobs/{id}")
+    @PutMapping("/{id}")
     public String updateJob(@PathVariable int id, @RequestBody Job job) {
         jobService.updateJob(id, job);
         return "Job updated successfully!";
     }
 
-    @DeleteMapping("jobs/{id}")
+    @DeleteMapping("/{id}")
     public String deleteJob(@PathVariable int id) {
         jobService.deleteJob(id);
         return "Job deleted successfully!";
     }
 
-    @GetMapping("jobs/{id}")
+    @GetMapping("/{id}")
     public Job getJob(@PathVariable int id) {
         return jobService.getJob(id);
     }
