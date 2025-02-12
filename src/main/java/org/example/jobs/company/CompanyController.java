@@ -1,5 +1,7 @@
 package org.example.jobs.company;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,30 +17,42 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> getAllCompanies() {
-        return companyService.getAllCompanies();
+    public ResponseEntity<List<Company>> getAllCompanies() {
+        List<Company> companies = companyService.getAllCompanies();
+        return ResponseEntity.ok(companies);
     }
 
     @GetMapping("/{id}")
-    public Company getCompany(@PathVariable int id) {
-        return companyService.getCompany(id);
+    public ResponseEntity<Company> getCompany(@PathVariable int id) {
+        Company company = companyService.getCompany(id);
+        return company != null ? ResponseEntity.ok(company) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public String createCompany(@RequestBody Company company) {
+    public ResponseEntity<String> createCompany(@RequestBody Company company) {
         companyService.addCompany(company);
-        return "Company created successfully!";
+        return ResponseEntity.status(HttpStatus.CREATED).body("Company created successfully!");
     }
 
     @PutMapping("/{id}")
-    public String updateCompany(@PathVariable int id, @RequestBody Company company) {
-        companyService.updateCompany(id, company);
-        return "Company updated successfully!";
+    public ResponseEntity<String> updateCompany(@PathVariable int id, @RequestBody Company company) {
+        boolean updated = companyService.updateCompany(id, company);
+
+        if (updated) {
+            return ResponseEntity.ok("Company updated successfully!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Company not found!");
+        }
     }
 
     @DeleteMapping("/{id}")
-    public String deleteCompany(@PathVariable int id) {
-        companyService.removeCompany(id);
-        return "Company deleted successfully!";
+    public ResponseEntity<String> deleteCompany(@PathVariable int id) {
+        boolean deleted = companyService.removeCompany(id);
+
+        if (deleted) {
+            return ResponseEntity.ok("Company deleted successfully!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Company not found!");
+        }
     }
 }
